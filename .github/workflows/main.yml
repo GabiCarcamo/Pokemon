@@ -1,31 +1,27 @@
 name: Build Flutter APK
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.0.0'  # Usa la versión de Flutter que necesitas
+        flutter-version: '3.0.0'
 
-    - name: Change directory to Flutter project
-      run: cd Pokemon  # Cambia al directorio donde está el pubspec.yaml
-
-    - name: Disable Flutter analytics
-      run: flutter config --no-analytics
+    - name: Change directory to the project folder
+      run: cd Pokemon  # Cambia a la carpeta donde está tu archivo pubspec.yaml
 
     - name: Install dependencies
       run: flutter pub get
 
     - name: Build APK
       run: flutter build apk --release
+
 
