@@ -3,32 +3,25 @@ name: Build Flutter APK
 on:
   push:
     branches:
-      - main  # Cambia "main" por la rama que estés usando
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.0.0'  # Ajusta esta versión según lo que necesites
+        flutter-version: '3.0.0'  # Usa la versión de Flutter que necesitas
+
+    - name: Disable Flutter analytics
+      run: flutter config --no-analytics  # Comando para desactivar los analytics
 
     - name: Install dependencies
-      run: flutter pub get
-
-    - name: Run tests
-      run: flutter test
+      run: flutter pub get  # Instala las dependencias
 
     - name: Build APK
-      run: flutter build apk --release
-
-    - name: Upload APK
-      uses: actions/upload-artifact@v3
-      with:
-        name: android-apk
-        path: build/app/outputs/flutter-apk/app-release.apk
+      run: flutter build apk --release  # Compila el APK
